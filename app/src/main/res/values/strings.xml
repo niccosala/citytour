@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">CityTour</string>
+    <string name="err_required_permissions">You must accept requested permissions before using CityTour</string>
+    <string name="txtWelcome">Welcome to CityTour! Get prepared to find out everything about your city!</string>
+    <string name="btnPermissions">ACCEPT PERMISSIONS</string>
+    <string name="tabMap">Map</string>
+    <string name="tabPlaces">Places</string>
+    <string name="txtInfo">Approach a point of interest to view further informations.</string>
 </resources>

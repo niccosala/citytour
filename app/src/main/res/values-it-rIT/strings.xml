@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CityTour</string>
+    <string name="err_required_permissions">Devi accettare i permessi richiesti per utilizzare CityTour</string>
+    <string name="txtWelcome">Benvenuto su CityTour! Preparati a scoprire tutto sulla tua città</string>
+    <string name="btnPermissions">ACCETTA PERMESSI</string>
+    <string name="tabMap">Mappa</string>
+    <string name="tabPlaces">Luoghi</string>
+    <string name="txtInfo">Avvicinati ad un punto di interesse per vedere le informazioni.</string>
+</resources>
