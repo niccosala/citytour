@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "978139397988",
+    "firebase_url": "https://citytour-2021-default-rtdb.firebaseio.com",
+    "project_id": "citytour-2021",
+    "storage_bucket": "citytour-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978139397988:android:592c043cdfc6c7fd83c471",
+        "android_client_info": {
+          "package_name": "it.niccolo.citytour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978139397988-u6gepnp8s3cslmg6skjg4fa58a823lu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU0Kf_6A31d5BcftIa4n1jC4nBYMrfDD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978139397988-u6gepnp8s3cslmg6skjg4fa58a823lu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978139397988:android:9565fb22e04907b883c471",
+        "android_client_info": {
+          "package_name": "it.niccolo.citytourdata"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978139397988-u6gepnp8s3cslmg6skjg4fa58a823lu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU0Kf_6A31d5BcftIa4n1jC4nBYMrfDD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978139397988-u6gepnp8s3cslmg6skjg4fa58a823lu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

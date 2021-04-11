@@ -16,6 +16,8 @@ class InitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init)
 
+        RealtimeDatabaseHandler.instance.getSpots(this)
+
         if(checkUpPermissions())
             goToMainActivity()
     }

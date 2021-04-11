@@ -4,6 +4,6 @@
     <string name="txtWelcome">Welcome to CityTour! Get prepared to find out everything about your city!</string>
     <string name="btnPermissions">ACCEPT PERMISSIONS</string>
     <string name="tabMap">Map</string>
-    <string name="tabPlaces">Places</string>
+    <string name="tabPlaces">Spots</string>
     <string name="txtInfo">Approach a point of interest to view further informations.</string>
 </resources>

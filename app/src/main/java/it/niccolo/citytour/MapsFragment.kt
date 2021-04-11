@@ -23,7 +23,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import kotlin.math.abs
 
 //TODO [IT] Gestire requestCodes
@@ -90,19 +89,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         mMap.setOnInfoWindowClickListener(this)
 
         setUpMap()
-
-        markers.add(mMap.addMarker(
-            MarkerOptions()
-            .position(LatLng(45.550882, 9.088462))
-            .title("Nicco's House")
-            .snippet("It's Lenticchia's house too")
-            .alpha(0.8f)))
-
-        markers.add(mMap.addMarker(
-            MarkerOptions()
-            .position(LatLng(45.549229529570745, 9.087273032058517))
-            .title("Einaudi Park")
-            .alpha(0.8f)))
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {

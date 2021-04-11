@@ -2,6 +2,7 @@ package it.niccolo.citytour
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +26,9 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) { }
             override fun onTabReselected(tab: TabLayout.Tab) { }
         })
+
+        val db = DatabaseHandler(this)
+        db.dropDatabase()
     }
 
     fun showDetailsButton(toShow : Boolean, title : String?) {
