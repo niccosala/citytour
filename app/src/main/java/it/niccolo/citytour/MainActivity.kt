@@ -1,5 +1,6 @@
 package it.niccolo.citytour
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,9 +27,6 @@ class MainActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) { }
             override fun onTabReselected(tab: TabLayout.Tab) { }
         })
-
-        val db = DatabaseHandler(this)
-        db.dropDatabase()
     }
 
     fun showDetailsButton(toShow : Boolean, title : String?) {
@@ -37,11 +35,17 @@ class MainActivity : AppCompatActivity() {
         lateinit var text : String
 
         if(title != null)
-            text = if(title.length <= 20 ) "VISUALIZZA '$title'" else "VISUALIZZA '${title.take(20)}'"
+            text = if(title.length <= 20) "VISUALIZZA '$title'" else "VISUALIZZA '${title.take(17)}...'"
 
         btnDetails.text = text
+        btnDetails.hint = title
         btnDetails.visibility = bVisibility
         txtInfo.visibility = tVisibility
+    }
+
+    fun goToInfoActivity(spotName : String) {
+        startActivity(Intent(this, InfoActivity::class.java).putExtra("spotName", spotName))
+        Log.d("dev-intent", "Going to InfoActivity (passed '$spotName')")
     }
 
 }

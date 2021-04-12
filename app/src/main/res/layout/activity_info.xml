@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgSpot"
+                android:layout_width="0dp"
+                android:layout_height="174dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSpotName"
+                app:srcCompat="@drawable/nope" />
+
+            <TextView
+                android:id="@+id/txtBack"
+                android:layout_width="50dp"
+                android:layout_height="49dp"
+                android:gravity="center_vertical"
+                android:onClick="goBack"
+                android:paddingLeft="12dp"
+                android:text="&lt;"
+                android:textColor="@color/aquamarine"
+                android:textSize="28sp"
+                app:layout_constraintEnd_toStartOf="@+id/txtSpotName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtSpotName"
+                android:layout_width="0dp"
+                android:layout_height="49dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:paddingLeft="-50dp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/imgSpot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txtPosition"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/txtPosition"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgSpot" />
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="25dp"
+                android:text="@string/txtDescription"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frgMinimap" />
+
+            <fragment
+                android:id="@+id/frgMinimap"
+                android:name="it.niccolo.citytour.MinimapFragment"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/txtAddress"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
+
+            <TextView
+                android:id="@+id/txtLongitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/txtLongitude"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtLatitudeValue" />
+
+            <TextView
+                android:id="@+id/txtLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/txtLatitude"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtAddressValue" />
+
+            <TextView
+                android:id="@+id/txtAddressValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="7dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
+
+            <TextView
+                android:id="@+id/txtLatitudeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtLatitude" />
+
+            <TextView
+                android:id="@+id/txtLongitudeValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintTop_toBottomOf="@+id/txtLongitude" />
+
+            <TextView
+                android:id="@+id/txtDescriptionValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

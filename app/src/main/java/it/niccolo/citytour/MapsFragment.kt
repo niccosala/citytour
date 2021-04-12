@@ -34,13 +34,16 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private lateinit var locationCallback : LocationCallback
     private lateinit var locationRequest : LocationRequest
     private var locationUpdateState = false
-    var markers : MutableList<Marker> = mutableListOf()
     private lateinit var context : AppCompatActivity
+    private lateinit var markers : MutableList<Marker>
+    var nearestSpot : Marker? = null
+    private lateinit var db : DatabaseHandler
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is Activity) {
             this.context = context as AppCompatActivity
+            db = DatabaseHandler(context)
         }
     }
 
@@ -65,16 +68,36 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
                 mLastLocation = p0.lastLocation
 
-                //TODO [IT] Cercare marker più vicino alla posizione corrente
-                for(i in 0 until markers.size)
-                    if(abs(mLastLocation.latitude - markers[i].position.latitude) < 0.00090
-                        && abs(mLastLocation.longitude - markers[i].position.longitude) < 0.00090) {
-                        Log.d("Posizione", "Vicino a " + markers[i].title)
-                        markers[i].showInfoWindow()
-                        if(context is MainActivity)
-                            (context as MainActivity).showDetailsButton(true, markers[i].title)
-                        return
+                var latNSpot = 0.0
+                var lgtNSpot = 0.0
+                for(i in 0 until markers.size) {
+                    val latCurr = mLastLocation.latitude
+                    val lgtCurr = mLastLocation.longitude
+                    val latSpot = markers[i].position.latitude
+                    val lgtSpot = markers[i].position.longitude
+                    if(abs(latCurr - latSpot) < 0.00090
+                        && abs(lgtCurr - lgtSpot) < 0.00090) {
+                        if(nearestSpot == null) {
+                            nearestSpot = markers[i]
+                            latNSpot = latSpot
+                            lgtNSpot = lgtSpot
+                        } else if(abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
+                            abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))
+                            nearestSpot = markers[i]
+                            latNSpot = latSpot
+                            lgtNSpot = lgtSpot
+                    } else
+                        nearestSpot = null
+                }
+                if(context is MainActivity) {
+                    if (nearestSpot != null) {
+                        (context as MainActivity).showDetailsButton(true, nearestSpot!!.title)
+                        nearestSpot!!.showInfoWindow()
+                        Log.d("dev-map", "Next to ${nearestSpot!!.title}")
                     }
+                    else
+                        (context as MainActivity).showDetailsButton(false, null)
+                }
             }
         }
         createLocationRequest()
@@ -89,6 +112,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         mMap.setOnInfoWindowClickListener(this)
 
         setUpMap()
+        markers = db.getMarkers(mMap)
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {

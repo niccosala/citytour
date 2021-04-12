@@ -7,4 +7,9 @@
     <string name="tabMap">Mappa</string>
     <string name="tabPlaces">Luoghi</string>
     <string name="txtInfo">Avvicinati ad un punto di interesse per vedere le informazioni.</string>
+    <string name="txtPosition">Posizione</string>
+    <string name="txtAddress">Indirizzo</string>
+    <string name="txtLatitude">Latitudine</string>
+    <string name="txtLongitude">Longitudine</string>
+    <string name="txtDescription">Descrizione</string>
 </resources>

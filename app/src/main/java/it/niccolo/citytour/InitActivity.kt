@@ -16,17 +16,18 @@ class InitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init)
 
-        RealtimeDatabaseHandler.instance.getSpots(this)
+        val db = DatabaseHandler(this)
+        db.dropDatabase()
 
-        if(checkUpPermissions())
-            goToMainActivity()
+        if(checkUpPermissions()) {
+            prgBar.visibility = View.VISIBLE
+            RealtimeDatabaseHandler.instance.getSpots(this)
+        }
     }
 
     fun clickRequirePermissions(view : View) = checkUpPermissions()
 
-    private fun goToMainActivity() {
-        prgBar.visibility = View.VISIBLE
-        //TODO Firebase connection and download methods
+    fun goToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
@@ -146,8 +147,5 @@ class InitActivity : AppCompatActivity() {
             goToMainActivity()
         }
     }
-
-    /***** FIREBASE REALTIME DATABASE > SQLITE *****/
-    //TODO [IT] gestione connessione e download contenuti da Firebase a SQLite
 
 }

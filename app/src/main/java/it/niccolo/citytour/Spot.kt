@@ -1,7 +1,5 @@
 package it.niccolo.citytour
 
-import android.graphics.drawable.Drawable
-
 class Spot {
 
     var name = ""

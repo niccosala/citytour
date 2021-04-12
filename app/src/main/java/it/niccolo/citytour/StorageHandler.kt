@@ -30,7 +30,7 @@ class StorageHandler private constructor() {
             val image = BitmapFactory.decodeByteArray(it, 0, it.size)
             view.setImageBitmap(image)
         }.addOnFailureListener {
-            Log.d("dev-storage-downloadImage", "Error: $it")
+            Log.d("dev-storage-downloadImage", "Error (path passed: '$imagePath'): $it")
         }
     }
 

@@ -6,4 +6,12 @@
     <string name="tabMap">Map</string>
     <string name="tabPlaces">Spots</string>
     <string name="txtInfo">Approach a point of interest to view further informations.</string>
+    <string name="appwidget_text" translatable="false">EXAMPLE</string>
+    <string name="add_widget" translatable="false">Add widget</string>
+    <string name="txtPosition">Location</string>
+    <string name="txtAddress">Address</string>
+    <string name="txtLatitude">Latitude</string>
+    <string name="txtLongitude">Longitude</string>
+    <string name="txtDescription">Description</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

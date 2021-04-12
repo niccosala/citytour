@@ -5,6 +5,10 @@ import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import java.sql.SQLException
 
 class DatabaseHandler(private val context : Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
@@ -27,8 +31,7 @@ class DatabaseHandler(private val context : Context) : SQLiteOpenHelper(context,
 
     fun getVersion() : Int {
         return try {
-            val query = "SELECT * FROM $TB_VERSION"
-            val cursor = database.rawQuery(query, null)
+            val cursor = database.rawQuery(GET_VERSION, null)
             if(cursor.moveToFirst())
                 cursor.getString(cursor.getColumnIndex(COL_V)).toInt()
             else
@@ -71,6 +74,63 @@ class DatabaseHandler(private val context : Context) : SQLiteOpenHelper(context,
         Log.d("dev-sqlitedb-dropdb", "DB dropped")
     }
 
+    fun getSpots() : MutableList<Spot> {
+        val spots : MutableList<Spot> = mutableListOf()
+        val cursor = database.rawQuery(GET_SPOTS, null)
+        if(cursor.moveToFirst()) {
+            do {
+                spots.add(0, Spot(
+                    cursor.getString(cursor.getColumnIndex(COL_NAME)),
+                    cursor.getString(cursor.getColumnIndex(COL_SNIPPET)),
+                    cursor.getString(cursor.getColumnIndex(COL_LAT)).toDouble(),
+                    cursor.getString(cursor.getColumnIndex(COL_LGT)).toDouble(),
+                    cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
+                    cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH))
+                ))
+            } while(cursor.moveToNext())
+        } else {
+            Log.d("dev-sqlitedb-getspots", "Error retrieving spots")
+        }
+        cursor.close()
+        return spots
+    }
+
+    fun getMarkers(mMap : GoogleMap) : MutableList<Marker> {
+        val markers : MutableList<Marker> = mutableListOf()
+        val cursor = database.rawQuery(GET_SPOTS, null)
+        if(cursor.moveToFirst()) {
+            do {
+                markers.add(mMap.addMarker(MarkerOptions()
+                    .title(cursor.getString(cursor.getColumnIndex(COL_NAME)))
+                    .snippet(cursor.getString(cursor.getColumnIndex(COL_SNIPPET)))
+                    .position(LatLng(
+                        cursor.getString(cursor.getColumnIndex(COL_LAT)).toDouble(),
+                        cursor.getString(cursor.getColumnIndex(COL_LGT)).toDouble()))
+                ))
+            } while(cursor.moveToNext())
+        } else {
+            Log.d("dev-sqlitedb-getspots", "Error retrieving spots")
+        }
+        cursor.close()
+        return markers
+    }
+
+    fun getSpecificSpot(spotName : String) : Spot? {
+        val cursor = database.rawQuery("SELECT * FROM $TB_SPOTS WHERE name = ${DatabaseUtils.sqlEscapeString(spotName)}", null)
+        if(cursor.moveToFirst()) {
+            return Spot(
+                cursor.getString(cursor.getColumnIndex(COL_NAME)),
+                cursor.getString(cursor.getColumnIndex(COL_SNIPPET)),
+                cursor.getString(cursor.getColumnIndex(COL_LAT)).toDouble(),
+                cursor.getString(cursor.getColumnIndex(COL_LGT)).toDouble(),
+                cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH))
+            )
+        } else
+            Log.d("dev-sqlitedb-getspecifspot", "Error retrieving spot '$spotName'")
+        return null
+    }
+
     private companion object {
         // DB Info
         const val DB_NAME = "CityTourDB"
@@ -86,7 +146,7 @@ class DatabaseHandler(private val context : Context) : SQLiteOpenHelper(context,
         // TB Version
         const val TB_VERSION = "Version"
         const val COL_V = "v"
-        // Init
+        // Queries
         const val CREATE_TB_SPOTS =
             "CREATE TABLE $TB_SPOTS (" +
                 "$COL_NAME VARCHAR(40) PRIMARY KEY, " +
@@ -104,6 +164,10 @@ class DatabaseHandler(private val context : Context) : SQLiteOpenHelper(context,
             "INSERT INTO $TB_VERSION (" +
             "$COL_V) VALUES (1" +
         ")"
+        const val GET_VERSION =
+            "SELECT * FROM $TB_VERSION"
+        const val GET_SPOTS =
+            "SELECT * FROM $TB_SPOTS"
     }
 
 }

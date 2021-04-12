@@ -24,27 +24,39 @@ class RealtimeDatabaseHandler private constructor() {
             version = v.value.toString().toInt()
             val db = DatabaseHandler(context)
             val ver = db.getVersion()
-            if(version != ver && ver > 0) {
-                refSpots.get().addOnSuccessListener { s ->
-                    db.clearSpots()
-                    for(i in s.children) {
-                        Log.d("dev-", "$i")
-                        var spot = Spot(
-                            i.child("name").value.toString(),
-                            i.child("snippet").value.toString(),
-                            i.child("lat").value.toString().toDouble(),
-                            i.child("lgt").value.toString().toDouble(),
-                            i.child("description").value.toString(),
-                            i.child("imagePath").value.toString()
-                        )
-                        db.addSpot(spot)
-                    }
-                    db.updateVersion(version)
-                }.addOnFailureListener{
-                    Log.d("dev-rtdb-spots", "Error: $it")
+            when {
+                ver <= 0 -> {
+                    Log.d("dev-rtdb-spots", "Error obtaining DB version")
+                    return@addOnSuccessListener
                 }
-            } else
-                Log.d("dev-rtdb-spots", "Error obtaining DB version")
+                version != ver -> {
+                    refSpots.get().addOnSuccessListener { s ->
+                        db.clearSpots()
+                        for(i in s.children) {
+                            Log.d("dev-", "$i")
+                            var spot = Spot(
+                                i.child("name").value.toString(),
+                                i.child("snippet").value.toString(),
+                                i.child("lat").value.toString().toDouble(),
+                                i.child("lgt").value.toString().toDouble(),
+                                i.child("description").value.toString(),
+                                i.child("imagePath").value.toString()
+                            )
+                            db.addSpot(spot)
+                        }
+                        db.updateVersion(version)
+                        if(context is InitActivity)
+                            context.goToMainActivity()
+                    }.addOnFailureListener{
+                        Log.d("dev-rtdb-spots", "Error: $it")
+                    }
+                }
+                else -> {
+                    Log.d("dev-rtdb-spots", "Local DB is already up to date")
+                    if(context is InitActivity)
+                        context.goToMainActivity()
+                }
+            }
         }.addOnFailureListener{
             Log.d("dev-rtdb-version", "Error: $it")
         }
