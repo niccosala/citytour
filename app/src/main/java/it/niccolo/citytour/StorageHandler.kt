@@ -1,5 +1,6 @@
 package it.niccolo.citytour
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
@@ -20,17 +21,18 @@ class StorageHandler private constructor() {
         val instance : StorageHandler by lazy { HOLDER.INSTANCE }
     }
 
-    fun downloadImage(view : ImageView, imagePath : String) {
-        storage = FirebaseStorage.getInstance()
-        storageRef = storage.reference
-        imageRef = storageRef.child("images/$imagePath")
+    fun downloadImage(context: Context, view: ImageView, spot: Spot) {
+        imageRef = storageRef.child("images/${spot.imagePath}")
 
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-            Log.d("dev-storage-downloadImage", "OK")
             val image = BitmapFactory.decodeByteArray(it, 0, it.size)
             view.setImageBitmap(image)
         }.addOnFailureListener {
-            Log.d("dev-storage-downloadImage", "Error (path passed: '$imagePath'): $it")
+            view.setImageResource(R.drawable.noimage)
+            Log.d(
+                "dev-storage",
+                "Error downloading the image (path passed: '${spot.imagePath}'): $it"
+            )
         }
     }
 

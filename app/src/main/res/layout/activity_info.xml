@@ -21,16 +21,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/imgSpot"
                 android:layout_width="0dp"
                 android:layout_height="174dp"
                 android:scaleType="centerCrop"
+                android:src="@drawable/loading"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtSpotName"
-                app:srcCompat="@drawable/nope" />
+                app:layout_constraintTop_toBottomOf="@+id/txtSpotName" />
 
             <TextView
                 android:id="@+id/txtBack"
@@ -42,9 +42,10 @@
                 android:text="&lt;"
                 android:textColor="@color/aquamarine"
                 android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@+id/imgSpot"
                 app:layout_constraintEnd_toStartOf="@+id/txtSpotName"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />" />
 
             <TextView
                 android:id="@+id/txtSpotName"
@@ -108,23 +109,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
 
             <TextView
-                android:id="@+id/txtLongitude"
+                android:id="@+id/txtCoords"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/txtLongitude"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
-                app:layout_constraintTop_toBottomOf="@+id/txtLatitudeValue" />
-
-            <TextView
-                android:id="@+id/txtLatitude"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/txtLatitude"
+                android:text="@string/txtCoords"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toEndOf="@+id/frgMinimap"
                 app:layout_constraintTop_toBottomOf="@+id/txtAddressValue" />
@@ -140,24 +130,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
             <TextView
-                android:id="@+id/txtLatitudeValue"
+                android:id="@+id/txtCoordsValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/frgMinimap"
-                app:layout_constraintTop_toBottomOf="@+id/txtLatitude" />
-
-            <TextView
-                android:id="@+id/txtLongitudeValue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
-                app:layout_constraintTop_toBottomOf="@+id/txtLongitude" />
+                app:layout_constraintTop_toBottomOf="@+id/txtCoords" />
 
             <TextView
                 android:id="@+id/txtDescriptionValue"
@@ -165,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
+                android:paddingBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

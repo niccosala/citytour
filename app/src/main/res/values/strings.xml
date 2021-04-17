@@ -10,8 +10,8 @@
     <string name="add_widget" translatable="false">Add widget</string>
     <string name="txtPosition">Location</string>
     <string name="txtAddress">Address</string>
-    <string name="txtLatitude">Latitude</string>
-    <string name="txtLongitude">Longitude</string>
+    <string name="txtCoords">Coordinates</string>
     <string name="txtDescription">Description</string>
+    <string name="dialog_spot">Do you want further informations about this spot?</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -19,28 +19,27 @@ class RealtimeDatabaseHandler private constructor() {
     }
 
     fun getSpots(context : Context) {
-        var version = -1
         refVersion.get().addOnSuccessListener { v ->
-            version = v.value.toString().toInt()
+            val version = v.value.toString().toInt()
             val db = DatabaseHandler(context)
             val ver = db.getVersion()
             when {
                 ver <= 0 -> {
-                    Log.d("dev-rtdb-spots", "Error obtaining DB version")
+                    Log.d("dev-rtdb", "Error retrieving DB version")
                     return@addOnSuccessListener
                 }
                 version != ver -> {
                     refSpots.get().addOnSuccessListener { s ->
                         db.clearSpots()
                         for(i in s.children) {
-                            Log.d("dev-", "$i")
-                            var spot = Spot(
+                            val spot = Spot(
                                 i.child("name").value.toString(),
                                 i.child("snippet").value.toString(),
                                 i.child("lat").value.toString().toDouble(),
                                 i.child("lgt").value.toString().toDouble(),
                                 i.child("description").value.toString(),
-                                i.child("imagePath").value.toString()
+                                i.child("imagePath").value.toString(),
+                                null
                             )
                             db.addSpot(spot)
                         }
@@ -48,17 +47,17 @@ class RealtimeDatabaseHandler private constructor() {
                         if(context is InitActivity)
                             context.goToMainActivity()
                     }.addOnFailureListener{
-                        Log.d("dev-rtdb-spots", "Error: $it")
+                        Log.d("dev-rtdb", "Error retrieving spots: $it")
                     }
                 }
                 else -> {
-                    Log.d("dev-rtdb-spots", "Local DB is already up to date")
+                    Log.d("dev-rtdb", "Local DB is already up to date")
                     if(context is InitActivity)
                         context.goToMainActivity()
                 }
             }
         }.addOnFailureListener{
-            Log.d("dev-rtdb-version", "Error: $it")
+            Log.d("dev-rtdb", "Error retrieving version: $it")
         }
     }
 

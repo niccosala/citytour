@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     fun showDetailsButton(toShow : Boolean, title : String?) {
         val bVisibility = if(toShow) View.VISIBLE else View.GONE
         val tVisibility = if(toShow) View.GONE else View.VISIBLE
-        lateinit var text : String
+        var text = ""
 
         if(title != null)
             text = if(title.length <= 20) "VISUALIZZA '$title'" else "VISUALIZZA '${title.take(17)}...'"
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     fun goToInfoActivity(spotName : String) {
         startActivity(Intent(this, InfoActivity::class.java).putExtra("spotName", spotName))
-        Log.d("dev-intent", "Going to InfoActivity (passed '$spotName')")
+        Log.d("dev-main", "Going to InfoActivity (passed '$spotName')")
     }
 
 }

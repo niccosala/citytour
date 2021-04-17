@@ -1,6 +1,7 @@
 package it.niccolo.citytour
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -25,8 +27,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import kotlin.math.abs
 
-//TODO [IT] Gestire requestCodes
-class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener, GoogleMap.OnInfoWindowClickListener {
+class MapsFragment :
+    Fragment(),
+    OnMapReadyCallback,
+    GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnInfoWindowClickListener,
+    GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnCameraMoveStartedListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mLastLocation: Location
@@ -38,6 +45,8 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
     private lateinit var markers : MutableList<Marker>
     var nearestSpot : Marker? = null
     private lateinit var db : DatabaseHandler
+    private var spotSelected = false
+    private var exploringMap = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,13 +70,19 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         mapFragment?.getMapAsync(this)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
         locationCallback = object : LocationCallback() {
+
             override fun onLocationResult(p0: LocationResult) {
                 super.onLocationResult(p0)
 
                 mLastLocation = p0.lastLocation
+                if(!exploringMap)
+                    mMap.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            LatLng(mLastLocation.latitude, mLastLocation.longitude),
+                            18.5F))
 
+                var closeSpot = false
                 var latNSpot = 0.0
                 var lgtNSpot = 0.0
                 for(i in 0 until markers.size) {
@@ -75,29 +90,29 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
                     val lgtCurr = mLastLocation.longitude
                     val latSpot = markers[i].position.latitude
                     val lgtSpot = markers[i].position.longitude
-                    if(abs(latCurr - latSpot) < 0.00090
-                        && abs(lgtCurr - lgtSpot) < 0.00090) {
-                        if(nearestSpot == null) {
+                    if(abs(latCurr - latSpot) < 0.0005000
+                        && abs(lgtCurr - lgtSpot) < 0.0005000 &&
+                        (abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
+                                abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))) {
                             nearestSpot = markers[i]
                             latNSpot = latSpot
                             lgtNSpot = lgtSpot
-                        } else if(abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
-                            abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))
-                            nearestSpot = markers[i]
-                            latNSpot = latSpot
-                            lgtNSpot = lgtSpot
-                    } else
-                        nearestSpot = null
+                            closeSpot = true
+                    }
                 }
+                if(!closeSpot)
+                    nearestSpot = null
                 if(context is MainActivity) {
                     if (nearestSpot != null) {
                         (context as MainActivity).showDetailsButton(true, nearestSpot!!.title)
-                        nearestSpot!!.showInfoWindow()
+                        if(!spotSelected)
+                            nearestSpot!!.showInfoWindow()
                         Log.d("dev-map", "Next to ${nearestSpot!!.title}")
                     }
                     else
                         (context as MainActivity).showDetailsButton(false, null)
                 }
+                Log.d("dev-map", "Curr. position: ${mLastLocation.latitude}, ${mLastLocation.longitude}")
             }
         }
         createLocationRequest()
@@ -105,79 +120,57 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
 
     override fun onMapReady(p0: GoogleMap?) {
         mMap = p0!!
-        mMap.setMinZoomPreference(13f)
+        mMap.setMinZoomPreference(9f)
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMyLocationButtonEnabled = true
+
         mMap.setOnMarkerClickListener(this)
         mMap.setOnInfoWindowClickListener(this)
+        mMap.setOnMyLocationButtonClickListener(this)
+        mMap.setOnCameraMoveStartedListener(this)
 
         setUpMap()
         markers = db.getMarkers(mMap)
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {
-        Log.d("dev-map", "Marker click")
+        spotSelected = true
+        p0!!.showInfoWindow()
         return false
     }
 
     override fun onInfoWindowClick(p0: Marker?) {
+        AlertDialog.Builder(context)
+            .setTitle(p0!!.title)
+            .setMessage(R.string.dialog_spot)
+            .setPositiveButton(android.R.string.yes
+            ) { dialog, _ ->
+                (context as MainActivity).goToInfoActivity(p0.title)
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.no, null)
+            .show()
         Log.d("dev-map", "InfoWindow click")
     }
 
-    private fun setUpMap() {
-        if (ActivityCompat.checkSelfPermission(
-                context,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                context,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                1
-            )
-            return
-        }
-
-        mMap.isMyLocationEnabled = true
-        mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-        mFusedLocationClient.lastLocation.addOnSuccessListener(context) { location ->
-            if (location != null) {
-                mLastLocation = location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18f))
-            }
-        }
+    override fun onMyLocationButtonClick(): Boolean {
+        createLocationRequest()
+        spotSelected = false
+        exploringMap = false
+        nearestSpot?.showInfoWindow()
+        return false
     }
 
-    private fun createLocationRequest() {
-        locationRequest = LocationRequest()
-        locationRequest.interval = 2500
-        locationRequest.fastestInterval = 750
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-
-        val client = LocationServices.getSettingsClient(context)
-        val task = client.checkLocationSettings(builder.build())
-
-        task.addOnSuccessListener {
-            locationUpdateState = true
-            startLocationUpdates()
-        }
-
-        task.addOnFailureListener { e ->
-            if (e is ResolvableApiException) {
-                try {
-                    e.startResolutionForResult(context, 2)
-                } catch (sendEx: IntentSender.SendIntentException) { }
-            }
+    override fun onCameraMoveStarted(p0: Int) {
+        if(p0 == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            exploringMap = true
+            Log.d("dev-map", "Map moved")
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 2) {
+        if (requestCode == PermissionCode.FINE_LOCATION) {
             if (resultCode == Activity.RESULT_OK) {
                 locationUpdateState = true
                 startLocationUpdates()
@@ -195,16 +188,77 @@ class MapsFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickList
         if (!locationUpdateState) {
             startLocationUpdates()
         }
+        createLocationRequest()
+    }
+
+    private fun setUpMap() {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                context,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                PermissionCode.FINE_LOCATION
+            )
+            return
+        }
+
+        mMap.isMyLocationEnabled = true
+        mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        mFusedLocationClient.lastLocation.addOnSuccessListener(context) { location ->
+            if (location != null) {
+                mLastLocation = location
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18.5f))
+            }
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun createLocationRequest() {
+        locationRequest = LocationRequest()
+        locationRequest.interval = 1000
+        locationRequest.fastestInterval = 2500
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+
+        val client = LocationServices.getSettingsClient(context)
+        val task = client.checkLocationSettings(builder.build())
+
+        task.addOnSuccessListener {
+            locationUpdateState = true
+            startLocationUpdates()
+        }
+
+        task.addOnFailureListener { e ->
+            if (e is ResolvableApiException) {
+                try {
+                    e.startResolutionForResult(context, PermissionCode.FINE_LOCATION)
+                } catch (sendEx: IntentSender.SendIntentException) { }
+            }
+        }
     }
 
     private fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(context,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(context,
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                context,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                2)
+                PermissionCode.FINE_LOCATION
+            )
         }
-        mFusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        mFusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
     }
 
 }

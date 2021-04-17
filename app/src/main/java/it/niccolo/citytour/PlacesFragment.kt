@@ -41,7 +41,6 @@ class PlacesFragment : Fragment() {
         listPlaces.adapter = adapter
         listPlaces.setOnItemClickListener { _, _, pos, _ ->
             (appContext as MainActivity).goToInfoActivity(adapter.getItemName(pos))
-            Log.d("dev-places-click", adapter.getItemName(pos))
         }
     }
 

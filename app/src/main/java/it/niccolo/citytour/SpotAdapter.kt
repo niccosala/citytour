@@ -1,5 +1,6 @@
 package it.niccolo.citytour
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,9 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.list_item.view.*
 import kotlin.collections.ArrayList
 
-class SpotAdapter(private val context: Context,
-                  private val dataSource: ArrayList<Spot>
+class SpotAdapter(
+    context: Context,
+    private val dataSource: ArrayList<Spot>
 ) : BaseAdapter() {
 
     private val inflater: LayoutInflater =
@@ -32,6 +34,7 @@ class SpotAdapter(private val context: Context,
         return dataSource[p0].name
     }
 
+    @SuppressLint("ViewHolder", "SetTextI18n")
     override fun getView(p0 : Int, p1 : View?, p2 : ViewGroup?) : View {
         val rowView = inflater.inflate(R.layout.list_item, p2, false)
 
@@ -41,8 +44,16 @@ class SpotAdapter(private val context: Context,
         val lgt = rowView.txtLgt as TextView
 
         val spot = getItem(p0) as Spot
-        title.text = spot.name
-        snippet.text = spot.description
+        var spotName = spot.name
+        var spotSnip = spot.snippet
+
+        if(spotName.length > 20)
+            spotName = "${spotName.take(20)}..."
+        if(spotSnip!!.length > 30)
+            spotSnip = "${spotSnip.take(30)}..."
+
+        title.text = spotName
+        snippet.text = spotSnip
         lat.text = spot.lat.toString()
         lgt.text = spot.lgt.toString()
 

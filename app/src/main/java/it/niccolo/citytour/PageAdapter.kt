@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
+@Suppress("DEPRECATION")
 class PagerAdapter(fm : FragmentManager, private val numOfTabs : Int) : FragmentPagerAdapter(fm) {
 
     override fun getCount() : Int {

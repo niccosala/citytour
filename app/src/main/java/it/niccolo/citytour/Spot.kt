@@ -1,23 +1,13 @@
 package it.niccolo.citytour
 
-class Spot {
+import android.graphics.Bitmap
 
-    var name = ""
+class Spot(var name: String, snippet: String?, var lat: Double, var lgt: Double, var description: String, var imagePath: String, var image: Bitmap?) {
+
     var snippet : String? = ""
-    var lat : Double = 0.0
-    var lgt : Double = 0.0
-    var description = ""
-    var imagePath : String = ""
 
-    constructor()
-
-    constructor(name : String, snippet : String?, lat : Double, lgt : Double, description : String, imagePath : String) {
-        this.name = name
+    init {
         this.snippet = snippet ?: ""
-        this.lat = lat
-        this.lgt = lgt
-        this.description = description
-        this.imagePath = imagePath
     }
 
     override fun toString() : String {

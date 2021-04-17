@@ -16,15 +16,13 @@ class InitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_init)
 
-        val db = DatabaseHandler(this)
-        db.dropDatabase()
-
         if(checkUpPermissions()) {
             prgBar.visibility = View.VISIBLE
             RealtimeDatabaseHandler.instance.getSpots(this)
         }
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun clickRequirePermissions(view : View) = checkUpPermissions()
 
     fun goToMainActivity() {
@@ -80,19 +78,19 @@ class InitActivity : AppCompatActivity() {
             requestFineLocation()
             everythingOk = false
         } else
-            Log.d("dev-permissions", "Permissions: Fine Location OK")
+            Log.d("dev-init", "Permissions: Fine Location OK")
 
         if(!availableCoarseLocation()) {
             requestCoarseLocation()
         everythingOk = false
         } else
-            Log.d("dev-permissions", "Permissions: Coarse Location OK")
+            Log.d("dev-init", "Permissions: Coarse Location OK")
 
         if(!availableInternet()) {
             requestInternet()
             everythingOk = false
         } else
-            Log.d("dev-permissions", "Permissions: Internet OK")
+            Log.d("dev-init", "Permissions: Internet OK")
 
         return everythingOk
     }
@@ -110,7 +108,7 @@ class InitActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty()
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 )
-                    Log.d("dev-permissions", "Permissions: Fine Location OK")
+                    Log.d("dev-init", "Permissions: Fine Location OK")
                 else
                     permissionOk = false
             }
@@ -118,7 +116,7 @@ class InitActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty()
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED
                 )
-                    Log.d("dev-permissions", "Permissions: Coarse Location OK")
+                    Log.d("dev-init", "Permissions: Coarse Location OK")
                 else
                     permissionOk = false
             }
@@ -126,7 +124,7 @@ class InitActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty()
                     && grantResults[2] == PackageManager.PERMISSION_GRANTED
                 )
-                    Log.d("dev-permissions", "Permissions: Internet OK")
+                    Log.d("dev-init", "Permissions: Internet OK")
                 else
                     permissionOk = false
             }
@@ -134,7 +132,7 @@ class InitActivity : AppCompatActivity() {
 
         if(!permissionOk) {
             if(btnPermissions.visibility == View.VISIBLE) {
-                Log.d("dev-permissions", "Permissions: Missing permissions")
+                Log.d("dev-init", "Permissions: Missing permissions")
                 Toast.makeText(
                     this,
                     getString(R.string.err_required_permissions),

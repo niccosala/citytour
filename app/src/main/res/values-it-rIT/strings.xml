@@ -9,7 +9,7 @@
     <string name="txtInfo">Avvicinati ad un punto di interesse per vedere le informazioni.</string>
     <string name="txtPosition">Posizione</string>
     <string name="txtAddress">Indirizzo</string>
-    <string name="txtLatitude">Latitudine</string>
-    <string name="txtLongitude">Longitudine</string>
+    <string name="txtCoords">Coordinate</string>
     <string name="txtDescription">Descrizione</string>
+    <string name="dialog_spot">Vuoi visualizzare più informazioni su questo luogo?</string>
 </resources>
