@@ -24,11 +24,10 @@
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/imgSpot"
                 android:layout_width="0dp"
-                android:layout_height="174dp"
+                android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/loading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintEnd_toStartOf="@+id/frgMinimap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtSpotName" />
 
@@ -64,78 +63,77 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
-                android:paddingTop="25dp"
+                android:paddingTop="15dp"
                 android:text="@string/txtPosition"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgSpot" />
+                app:layout_constraintStart_toEndOf="@+id/imgSpot"
+                app:layout_constraintTop_toBottomOf="@+id/frgMinimap" />
 
             <TextView
                 android:id="@+id/txtDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
                 android:paddingLeft="15dp"
-                android:paddingTop="25dp"
+                android:paddingTop="15dp"
                 android:text="@string/txtDescription"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtPosition"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frgMinimap" />
+                app:layout_constraintTop_toBottomOf="@+id/imgSpot" />
 
             <fragment
                 android:id="@+id/frgMinimap"
                 android:name="it.niccolo.citytour.MinimapFragment"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
+                android:layout_width="225dp"
+                android:layout_height="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSpotName" />
 
             <TextView
                 android:id="@+id/txtAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
                 android:text="@string/txtAddress"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtDescription"
                 app:layout_constraintTop_toBottomOf="@+id/txtPosition" />
 
             <TextView
                 android:id="@+id/txtCoords"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
                 android:text="@string/txtCoords"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txtDescription"
                 app:layout_constraintTop_toBottomOf="@+id/txtAddressValue" />
 
             <TextView
                 android:id="@+id/txtAddressValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="7dp"
                 android:alpha="0.45"
-                android:paddingRight="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/txtDescription"
                 app:layout_constraintTop_toBottomOf="@+id/txtAddress" />
 
             <TextView
                 android:id="@+id/txtCoordsValue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
                 android:alpha="0.45"
-                android:paddingRight="8dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/frgMinimap"
+                app:layout_constraintStart_toEndOf="@+id/txtDescription"
                 app:layout_constraintTop_toBottomOf="@+id/txtCoords" />
 
             <TextView
@@ -145,10 +143,9 @@
                 android:alpha="0.45"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
-                android:paddingRight="15dp"
+                android:paddingRight="10dp"
                 android:paddingBottom="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/txtDescription"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
 

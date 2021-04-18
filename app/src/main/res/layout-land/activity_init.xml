@@ -9,12 +9,10 @@
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="0dp"
-        android:layout_height="188dp"
-        android:layout_marginTop="30dp"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtWelcome"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="0dp"
+        android:padding="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/prgBar"
+        app:layout_constraintEnd_toStartOf="@+id/txtWelcome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_large" />
@@ -23,25 +21,24 @@
         android:id="@+id/txtWelcome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:alpha="0.45"
+        android:gravity="center"
         android:padding="25dp"
         android:text="@string/txtWelcome"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/prgBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        app:layout_constraintStart_toEndOf="@+id/imgLogo"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPermissions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:onClick="clickRequirePermissions"
         android:text="@string/btnPermissions"
         android:visibility="invisible"
@@ -53,13 +50,11 @@
     <ProgressBar
         android:id="@+id/prgBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/btnPermissions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtWelcome" />
+        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
