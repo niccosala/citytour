@@ -1,6 +1,5 @@
 package it.niccolo.citytour
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,16 +19,9 @@ class InfoActivity : AppCompatActivity() {
         val name = intent.getStringExtra("spotName")!!
         txtSpotName.text = name
         spot = db.getSpecificSpot(name)!!
-        setImage(db.getImage(spot))
+        StorageHandler.instance.downloadImage(imgSpot, spot)
         setDescritpion(spot.description)
         Log.d("dev-info", "received '$name' from MainActivity")
-    }
-
-    private fun setImage(image : Bitmap?) {
-        if(image == null)
-            StorageHandler.instance.downloadImage(this, imgSpot, spot)
-        else
-            imgSpot.setImageBitmap(image)
     }
 
     fun setPosition(lat: String, lgt: String, address: String) {

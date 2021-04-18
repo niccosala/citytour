@@ -13,5 +13,9 @@
     <string name="txtCoords">Coordinates</string>
     <string name="txtDescription">Description</string>
     <string name="dialog_spot">Do you want further informations about this spot?</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="dialog_maps_connection">It\' recommended to enable your GPS and network connection to make CityTour work at its best</string>
+    <string name="dialog_maps_connection_title">We can do better</string>
+    <string name="close">Close</string>
+    <string name="dialog_init_connection_title">Unable to connect to server</string>
+    <string name="dialog_init_connection">Try again later. Remember to check your internet connection</string>
 </resources>

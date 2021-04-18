@@ -3,17 +3,18 @@ package it.niccolo.citytour
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Context.LOCATION_SERVICE
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -53,6 +54,14 @@ class MapsFragment :
         if (context is Activity) {
             this.context = context as AppCompatActivity
             db = DatabaseHandler(context)
+        }
+        val locationManager : LocationManager = this.context.getSystemService(LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            AlertDialog.Builder(this.context)
+                .setTitle(R.string.dialog_maps_connection_title)
+                .setMessage(R.string.dialog_maps_connection)
+                .setNegativeButton(R.string.close, null)
+                .show()
         }
     }
 

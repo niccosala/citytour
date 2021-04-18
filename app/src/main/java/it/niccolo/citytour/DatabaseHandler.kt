@@ -12,7 +12,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import java.io.ByteArrayOutputStream
 import java.sql.SQLException
 
 @SuppressLint("Recycle")
@@ -99,8 +98,7 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(
                         cursor.getString(cursor.getColumnIndex(COL_LAT)).toDouble(),
                         cursor.getString(cursor.getColumnIndex(COL_LGT)).toDouble(),
                         cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH)),
-                        null
+                        cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH))
                     )
                 )
             } while(cursor.moveToNext())
@@ -146,53 +144,16 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(
             }", null
         )
         if(cursor.moveToFirst()) {
-            val image : Bitmap? =
-                if(cursor.getBlob(cursor.getColumnIndex(COL_IMAGE)) != null)
-                BitmapFactory.decodeByteArray(
-                    cursor.getBlob(cursor.getColumnIndex(COL_IMAGE)),
-                    0,
-                    cursor.getBlob(cursor.getColumnIndex(COL_IMAGE)).size
-                )
-                else
-                    null
             return Spot(
                 cursor.getString(cursor.getColumnIndex(COL_NAME)),
                 cursor.getString(cursor.getColumnIndex(COL_SNIPPET)),
                 cursor.getString(cursor.getColumnIndex(COL_LAT)).toDouble(),
                 cursor.getString(cursor.getColumnIndex(COL_LGT)).toDouble(),
                 cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)),
-                cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH)),
-                image
+                cursor.getString(cursor.getColumnIndex(COL_IMAGEPATH))
             )
         } else
             Log.d("dev-sqlitedb", "Error retrieving spot '$spotName'")
-        return null
-    }
-
-    fun getImage(spot: Spot) : Bitmap? {
-        Log.d("dev-image", "Ehy0")
-        val cursor = database.rawQuery(
-            "SELECT $COL_IMAGE FROM $TB_SPOTS WHERE $COL_NAME = ${
-                DatabaseUtils.sqlEscapeString(
-                    spot.name
-                )
-            }", null
-        )
-        if(cursor.moveToFirst()) {
-            val blob : ByteArray? = cursor.getBlob(cursor.getColumnIndex(COL_IMAGE))
-            if(blob != null) {
-                Log.d("dev-image", "Ehyok $blob")
-                val a = BitmapFactory.decodeByteArray(
-                    blob, 0, blob.size
-                )
-                Log.d("dev-blob", "$a")
-                return a
-            } else {
-                Log.d("dev-image", "Ehy")
-                return null
-            }
-        }
-        Log.d("dev-image", "Ehy2")
         return null
     }
 
@@ -208,7 +169,6 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(
         const val COL_LGT = "lgt"
         const val COL_DESCRIPTION = "description"
         const val COL_IMAGEPATH = "imagePath"
-        const val COL_IMAGE = "image"
         // TB Version
         const val TB_VERSION = "Version"
         const val COL_V = "v"
@@ -220,8 +180,7 @@ class DatabaseHandler(private val context: Context) : SQLiteOpenHelper(
                 "$COL_LAT VARCHAR(10), " +
                 "$COL_LGT VARCHAR(10), " +
                 "$COL_DESCRIPTION VARCHAR(350), " +
-                "$COL_IMAGEPATH VARCHAR(60)," +
-                "$COL_IMAGE BLOB" +
+                "$COL_IMAGEPATH VARCHAR(60)"  +
             ")"
         const val CREATE_TB_VERSION =
             "CREATE TABLE $TB_VERSION (" +

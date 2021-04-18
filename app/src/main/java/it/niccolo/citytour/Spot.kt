@@ -1,8 +1,6 @@
 package it.niccolo.citytour
 
-import android.graphics.Bitmap
-
-class Spot(var name: String, snippet: String?, var lat: Double, var lgt: Double, var description: String, var imagePath: String, var image: Bitmap?) {
+class Spot(var name: String, snippet: String?, var lat: Double, var lgt: Double, var description: String, var imagePath: String) {
 
     var snippet : String? = ""
 

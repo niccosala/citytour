@@ -12,4 +12,9 @@
     <string name="txtCoords">Coordinate</string>
     <string name="txtDescription">Descrizione</string>
     <string name="dialog_spot">Vuoi visualizzare più informazioni su questo luogo?</string>
+    <string name="dialog_maps_connection">E\' consigliato abilitare il GPS e la connessione di rete per far funzionare al meglio CityTour</string>
+    <string name="dialog_maps_connection_title">Si può fare di più</string>
+    <string name="close">Chiudi</string>
+    <string name="dialog_init_connection_title">Impossibile connettersi al server</string>
+    <string name="dialog_init_connection">Riprova più tardi. Ricorda ti controllare la tua connessione ad internet</string>
 </resources>

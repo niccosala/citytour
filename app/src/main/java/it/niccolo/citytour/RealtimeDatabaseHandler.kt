@@ -38,8 +38,7 @@ class RealtimeDatabaseHandler private constructor() {
                                 i.child("lat").value.toString().toDouble(),
                                 i.child("lgt").value.toString().toDouble(),
                                 i.child("description").value.toString(),
-                                i.child("imagePath").value.toString(),
-                                null
+                                i.child("imagePath").value.toString()
                             )
                             db.addSpot(spot)
                         }

@@ -1,6 +1,5 @@
 package it.niccolo.citytour
 
-import android.content.Context
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
@@ -21,7 +20,7 @@ class StorageHandler private constructor() {
         val instance : StorageHandler by lazy { HOLDER.INSTANCE }
     }
 
-    fun downloadImage(context: Context, view: ImageView, spot: Spot) {
+    fun downloadImage(view: ImageView, spot: Spot) {
         imageRef = storageRef.child("images/${spot.imagePath}")
 
         imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
