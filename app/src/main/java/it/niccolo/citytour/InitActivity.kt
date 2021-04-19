@@ -31,10 +31,8 @@ class InitActivity : AppCompatActivity() {
                     finish()
                 }
                 .show()
-        else if(checkUpPermissions()) {
-            prgBar.visibility = View.VISIBLE
-            RealtimeDatabaseHandler.instance.getSpots(this)
-        }
+        else if(checkUpPermissions())
+            initializer()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -43,6 +41,11 @@ class InitActivity : AppCompatActivity() {
     fun goToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun initializer() {
+        prgBar.visibility = View.VISIBLE
+        RealtimeDatabaseHandler.instance.getSpots(this)
     }
 
     private fun availableFineLocation() : Boolean =
@@ -155,7 +158,7 @@ class InitActivity : AppCompatActivity() {
             btnPermissions.visibility = View.VISIBLE
         } else {
             btnPermissions.visibility = View.INVISIBLE
-            goToMainActivity()
+            initializer()
         }
     }
 
