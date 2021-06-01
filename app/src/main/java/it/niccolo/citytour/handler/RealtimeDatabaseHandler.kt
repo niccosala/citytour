@@ -1,8 +1,10 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.handler
 
 import android.content.Context
 import android.util.Log
 import com.google.firebase.database.*
+import it.niccolo.citytour.activity.InitActivity
+import it.niccolo.citytour.entity.Spot
 
 class RealtimeDatabaseHandler private constructor() {
 

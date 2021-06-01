@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import it.niccolo.citytour.R
+import it.niccolo.citytour.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_location.*
 
 class LocationFragment : Fragment() {

@@ -31,9 +31,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".InfoActivity" />
+        <activity android:name=".activity.InfoActivity" />
         <activity
-            android:name=".InitActivity"
+            android:name=".activity.InitActivity"
             android:theme="@style/Theme.CityTour">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

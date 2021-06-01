@@ -1,17 +1,16 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.handler
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import it.niccolo.citytour.entity.Spot
 import java.sql.SQLException
 
 @SuppressLint("Recycle")

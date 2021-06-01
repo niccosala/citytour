@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.entity
 
 class Spot(var name: String, snippet: String?, var lat: Double, var lgt: Double, var description: String, var imagePath: String) {
 

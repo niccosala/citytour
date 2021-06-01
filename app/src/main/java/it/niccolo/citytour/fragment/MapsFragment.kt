@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
@@ -26,7 +26,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import it.niccolo.citytour.common.PermissionCode
+import it.niccolo.citytour.R
+import it.niccolo.citytour.activity.MainActivity
+import it.niccolo.citytour.handler.DatabaseHandler
 import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class MapsFragment :
     Fragment(),
@@ -91,6 +97,13 @@ class MapsFragment :
                             LatLng(mLastLocation.latitude, mLastLocation.longitude),
                             18.5F))
 
+                // D = sqrt((lat1^2 - lat2^2) + (lgt1^2 - lgt2^2)
+                /*
+                if(abs(latCurr - latSpot) < 0.0004000
+                        && abs(lgtCurr - lgtSpot) < 0.0004000 &&
+                        (abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
+                                abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))) {
+                 */
                 var closeSpot = false
                 var latNSpot = 0.0
                 var lgtNSpot = 0.0
@@ -99,14 +112,16 @@ class MapsFragment :
                     val lgtCurr = mLastLocation.longitude
                     val latSpot = markers[i].position.latitude
                     val lgtSpot = markers[i].position.longitude
-                    if(abs(latCurr - latSpot) < 0.0005000
-                        && abs(lgtCurr - lgtSpot) < 0.0005000 &&
-                        (abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
-                                abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))) {
-                            nearestSpot = markers[i]
-                            latNSpot = latSpot
-                            lgtNSpot = lgtSpot
-                            closeSpot = true
+                    Log.d("dev-map", "${i+1} di ${markers.size}: ${sqrt((abs(latCurr - latSpot).pow(2)) + (abs(lgtCurr - lgtSpot).pow(2)))}")
+                    //Log.d("dev-map", "$i di ${markers.size}: ${abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot))}")
+                    if(abs(latCurr - latSpot) < 0.0004500 &&
+                            abs(lgtCurr - lgtSpot) < 0.0004500 &&
+                                sqrt((latCurr - latSpot).pow(2) + (lgtCurr - lgtSpot).pow(2)) <
+                                    sqrt((latCurr - latNSpot).pow(2) + (lgtCurr - lgtNSpot).pow(2))) {
+                                        nearestSpot = markers[i]
+                                        latNSpot = latSpot
+                                        lgtNSpot = lgtSpot
+                                        closeSpot = true
                     }
                 }
                 if(!closeSpot)
@@ -132,7 +147,6 @@ class MapsFragment :
         mMap.setMinZoomPreference(9f)
         mMap.uiSettings.isZoomControlsEnabled = true
         mMap.uiSettings.isMyLocationButtonEnabled = true
-
         mMap.setOnMarkerClickListener(this)
         mMap.setOnInfoWindowClickListener(this)
         mMap.setOnMyLocationButtonClickListener(this)
@@ -209,7 +223,7 @@ class MapsFragment :
             ActivityCompat.requestPermissions(
                 context,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                PermissionCode.FINE_LOCATION
+                    PermissionCode.FINE_LOCATION
             )
             return
         }
@@ -260,7 +274,7 @@ class MapsFragment :
             ActivityCompat.requestPermissions(
                 context,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                PermissionCode.FINE_LOCATION
+                    PermissionCode.FINE_LOCATION
             )
         }
         mFusedLocationClient.requestLocationUpdates(

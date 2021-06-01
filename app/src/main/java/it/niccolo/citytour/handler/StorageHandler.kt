@@ -1,10 +1,12 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.handler
 
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.ImageView
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import it.niccolo.citytour.R
+import it.niccolo.citytour.entity.Spot
 
 class StorageHandler private constructor() {
 

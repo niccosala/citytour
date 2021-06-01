@@ -42,7 +42,6 @@
         android:paddingTop="3dp"
         android:paddingBottom="3dp"
         android:text="Title"
-        android:textColor="#000000"
         android:textSize="22sp" />
 
     <TextView

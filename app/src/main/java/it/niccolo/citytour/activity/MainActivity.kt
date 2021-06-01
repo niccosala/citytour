@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.google.android.material.tabs.TabLayout
+import it.niccolo.citytour.adapter.PagerAdapter
+import it.niccolo.citytour.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_location.*
 

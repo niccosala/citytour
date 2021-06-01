@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import it.niccolo.citytour.R
+import it.niccolo.citytour.entity.Spot
 import kotlinx.android.synthetic.main.list_item.view.*
 import kotlin.collections.ArrayList
 

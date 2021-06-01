@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.fragment
 
 import android.content.Context
 import android.location.Address
@@ -16,6 +16,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import it.niccolo.citytour.R
+import it.niccolo.citytour.entity.Spot
+import it.niccolo.citytour.activity.InfoActivity
+import it.niccolo.citytour.handler.DatabaseHandler
 import java.util.*
 
 

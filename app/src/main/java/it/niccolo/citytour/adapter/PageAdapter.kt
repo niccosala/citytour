@@ -1,8 +1,10 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import it.niccolo.citytour.fragment.LocationFragment
+import it.niccolo.citytour.fragment.PlacesFragment
 
 @Suppress("DEPRECATION")
 class PagerAdapter(fm : FragmentManager, private val numOfTabs : Int) : FragmentPagerAdapter(fm) {

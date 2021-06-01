@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.activity
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,6 +11,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import it.niccolo.citytour.common.PermissionCode
+import it.niccolo.citytour.R
+import it.niccolo.citytour.handler.RealtimeDatabaseHandler
 import kotlinx.android.synthetic.main.activity_init.*
 
 
@@ -70,21 +73,21 @@ class InitActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-            PermissionCode.FINE_LOCATION
+                PermissionCode.FINE_LOCATION
         )
 
     private fun requestCoarseLocation() =
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
-            PermissionCode.COARSE_LOCATION
+                PermissionCode.COARSE_LOCATION
         )
 
     private fun requestInternet() =
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.INTERNET),
-            PermissionCode.INTERNET
+                PermissionCode.INTERNET
         )
 
     private fun checkUpPermissions() : Boolean {

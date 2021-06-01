@@ -1,4 +1,4 @@
-package it.niccolo.citytour
+package it.niccolo.citytour.common
 
 class PermissionCode {
 
