@@ -98,12 +98,6 @@ class MapsFragment :
                             18.5F))
 
                 // D = sqrt((lat1^2 - lat2^2) + (lgt1^2 - lgt2^2)
-                /*
-                if(abs(latCurr - latSpot) < 0.0004000
-                        && abs(lgtCurr - lgtSpot) < 0.0004000 &&
-                        (abs((latCurr - latSpot) + (lgtCurr - lgtSpot)) <
-                                abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot)))) {
-                 */
                 var closeSpot = false
                 var latNSpot = 0.0
                 var lgtNSpot = 0.0
@@ -113,7 +107,6 @@ class MapsFragment :
                     val latSpot = markers[i].position.latitude
                     val lgtSpot = markers[i].position.longitude
                     Log.d("dev-map", "${i+1} di ${markers.size}: ${sqrt((abs(latCurr - latSpot).pow(2)) + (abs(lgtCurr - lgtSpot).pow(2)))}")
-                    //Log.d("dev-map", "$i di ${markers.size}: ${abs((latCurr - latNSpot) + (lgtCurr - lgtNSpot))}")
                     if(abs(latCurr - latSpot) < 0.0004500 &&
                             abs(lgtCurr - lgtSpot) < 0.0004500 &&
                                 sqrt((latCurr - latSpot).pow(2) + (lgtCurr - lgtSpot).pow(2)) <
